@@ -11,40 +11,18 @@ namespace TrabalhoFinal
     {
 
         private int id;
+        private string nome;
         private string cpf;
         private string jogo;
         private string inicio;
         private string fim;
 
-        public int Id
-        {
-            get { return id; }
-            set { id = value; }
-        }
-        public string Cpf
-        {
-            get { return cpf; }
-            set { cpf = value; }
-        }
-        public string Jogo
-        {
-            get { return jogo; }
-            set { jogo = value; }
-        }
-        public string Inicio
-        {
-            get { return inicio; }
-            set { inicio = value; }
-        }
-
-
-        public string Fim
-        {
-            get { return fim; }
-            set { fim = value; }
-        }
-
-
+        public int Id { get => id; set => id = value; }
+        public string Nome { get => nome; set => nome = value; }
+        public string Cpf { get => cpf; set => cpf = value; }
+        public string Jogo { get => jogo; set => jogo = value; }
+        public string Inicio { get => inicio; set => inicio = value; }
+        public string Fim { get => fim; set => fim = value; }
 
         MySqlDataReader Count()
         {
@@ -72,7 +50,7 @@ namespace TrabalhoFinal
                     reader.Read();
                     if (reader.GetUInt32(0) > 0)
                     {
-                        string insert = $"insert into emprestimos(cpf,jogo,inicio) values ('{cpf}','{jogo}','{inicio}')";
+                        string insert = $"insert into emprestimos(nome,cpf,jogo,inicio) values ('{nome}','{cpf}','{jogo}','{inicio}')";
                         MySqlCommand comandosql = MysqlConexaoBanco.CreateCommand();
                         comandosql.CommandText = insert;
                         comandosql.ExecuteNonQuery();
@@ -111,7 +89,7 @@ namespace TrabalhoFinal
                     reader.Read();
                     if (reader.GetUInt32(0) < 1)
                     {
-                        string insert = $"update emprestimos set fim = '{fim}' where jogo = '{jogo}'";
+                        string insert = $"update emprestimos set fim = '{fim}' where id = '{id}'";
                         MySqlCommand comandosql = MysqlConexaoBanco.CreateCommand();
                         comandosql.CommandText = insert;
                         comandosql.ExecuteNonQuery();
@@ -136,7 +114,7 @@ namespace TrabalhoFinal
 
             }
         }
-        public MySqlDataReader LocalizarLivro()
+        public MySqlDataReader LocalizarJogo()
         {
             try
             {
@@ -144,6 +122,27 @@ namespace TrabalhoFinal
                 MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
                 MysqlConexaoBanco.Open();
                 string select = $"select id,nome,quantidade from jogos where nome = '{cpf}';";
+                MySqlCommand comandosql = MysqlConexaoBanco.CreateCommand();
+                comandosql.CommandText = select;
+                MySqlDataReader reader = comandosql.ExecuteReader();
+                return reader;
+
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Erro ao localizar Jogo- CadastroEmprestimo:" + ex.Message);
+                return null;
+            }
+        }
+        public MySqlDataReader LocalizarEmprestimo()
+        {
+            try
+            {
+
+                MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+                MysqlConexaoBanco.Open();
+                string select = $"select * from emprestimos where id = '{id}';";
                 MySqlCommand comandosql = MysqlConexaoBanco.CreateCommand();
                 comandosql.CommandText = select;
                 MySqlDataReader reader = comandosql.ExecuteReader();
@@ -165,7 +164,7 @@ namespace TrabalhoFinal
                 MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
                 MysqlConexaoBanco.Open();
 
-                string delete = $"delete from emprestimos where cpf = '{cpf}' AND jogo = '{jogo}';";
+                string delete = $"delete from emprestimos where id = '{id}' ;";
                 MySqlCommand comandosql = MysqlConexaoBanco.CreateCommand();
                 comandosql.CommandText = delete;
                 comandosql.ExecuteNonQuery();

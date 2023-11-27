@@ -67,10 +67,11 @@
             btnDisponibilidade = new Button();
             btnHistorico = new Button();
             btnLimpar = new Button();
-            btnVerificarEmprestimo = new Button();
             lblEmprestimos = new Label();
             txtQuantidade = new TextBox();
             label13 = new Label();
+            txtExcluir = new TextBox();
+            label14 = new Label();
             SuspendLayout();
             // 
             // lbl
@@ -166,7 +167,7 @@
             btnCliente.TabIndex = 6;
             btnCliente.Text = "Registrar Aluno";
             btnCliente.UseVisualStyleBackColor = false;
-            btnCliente.Click += btnAluno_Click;
+            btnCliente.Click += btnCliente_Click;
             // 
             // btnExcluir
             // 
@@ -277,7 +278,7 @@
             btnPesquisarCliente.TabIndex = 16;
             btnPesquisarCliente.Text = "Pesquisar Cpf";
             btnPesquisarCliente.UseVisualStyleBackColor = false;
-            btnPesquisarCliente.Click += btnPesquisarAluno_Click;
+            btnPesquisarCliente.Click += btnPesquisarCliente_Click;
             // 
             // label5
             // 
@@ -474,7 +475,7 @@
             btnDevolucao.FlatStyle = FlatStyle.Flat;
             btnDevolucao.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             btnDevolucao.ForeColor = Color.White;
-            btnDevolucao.Location = new Point(896, 597);
+            btnDevolucao.Location = new Point(892, 628);
             btnDevolucao.Margin = new Padding(3, 4, 3, 4);
             btnDevolucao.Name = "btnDevolucao";
             btnDevolucao.Padding = new Padding(5);
@@ -491,7 +492,7 @@
             btnExcluirEmprestimo.FlatStyle = FlatStyle.Flat;
             btnExcluirEmprestimo.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
             btnExcluirEmprestimo.ForeColor = Color.White;
-            btnExcluirEmprestimo.Location = new Point(686, 597);
+            btnExcluirEmprestimo.Location = new Point(681, 628);
             btnExcluirEmprestimo.Margin = new Padding(3, 4, 3, 4);
             btnExcluirEmprestimo.Name = "btnExcluirEmprestimo";
             btnExcluirEmprestimo.Padding = new Padding(5);
@@ -529,7 +530,7 @@
             btnJogosExcluir.TabIndex = 40;
             btnJogosExcluir.Text = "Excluir Jogo";
             btnJogosExcluir.UseVisualStyleBackColor = false;
-            btnJogosExcluir.Click += btnLivroExcluir_Click;
+            btnJogosExcluir.Click += btnJogosExcluir_Click;
             // 
             // btnJogosRegistrar
             // 
@@ -546,7 +547,7 @@
             btnJogosRegistrar.TabIndex = 38;
             btnJogosRegistrar.Text = "Registrar Jogo";
             btnJogosRegistrar.UseVisualStyleBackColor = false;
-            btnJogosRegistrar.Click += btnLivroRegistrar_Click;
+            btnJogosRegistrar.Click += btnJogosRegistrar_Click;
             // 
             // btnDisponibilidade
             // 
@@ -597,22 +598,6 @@
             btnLimpar.UseVisualStyleBackColor = false;
             btnLimpar.Click += btnLimpar_Click;
             // 
-            // btnVerificarEmprestimo
-            // 
-            btnVerificarEmprestimo.BackColor = Color.FromArgb(0, 71, 143);
-            btnVerificarEmprestimo.FlatAppearance.BorderSize = 0;
-            btnVerificarEmprestimo.FlatStyle = FlatStyle.Flat;
-            btnVerificarEmprestimo.Font = new Font("Verdana", 9F, FontStyle.Regular, GraphicsUnit.Point);
-            btnVerificarEmprestimo.ForeColor = Color.White;
-            btnVerificarEmprestimo.Location = new Point(896, 416);
-            btnVerificarEmprestimo.Margin = new Padding(0);
-            btnVerificarEmprestimo.Name = "btnVerificarEmprestimo";
-            btnVerificarEmprestimo.Size = new Size(214, 36);
-            btnVerificarEmprestimo.TabIndex = 46;
-            btnVerificarEmprestimo.Text = "Verificar empréstimo";
-            btnVerificarEmprestimo.UseVisualStyleBackColor = false;
-            btnVerificarEmprestimo.Click += btnVerificarEmprestimo_Click;
-            // 
             // lblEmprestimos
             // 
             lblEmprestimos.Anchor = AnchorStyles.None;
@@ -648,16 +633,42 @@
             label13.TabIndex = 49;
             label13.Text = "Quantidade";
             // 
+            // txtExcluir
+            // 
+            txtExcluir.Anchor = AnchorStyles.None;
+            txtExcluir.BorderStyle = BorderStyle.None;
+            txtExcluir.Cursor = Cursors.IBeam;
+            txtExcluir.Font = new Font("Verdana", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            txtExcluir.Location = new Point(864, 594);
+            txtExcluir.Margin = new Padding(0);
+            txtExcluir.MaxLength = 100;
+            txtExcluir.Name = "txtExcluir";
+            txtExcluir.Size = new Size(72, 25);
+            txtExcluir.TabIndex = 50;
+            // 
+            // label14
+            // 
+            label14.Anchor = AnchorStyles.None;
+            label14.AutoSize = true;
+            label14.Font = new Font("Verdana", 14.25F, FontStyle.Regular, GraphicsUnit.Point);
+            label14.ForeColor = Color.White;
+            label14.Location = new Point(808, 590);
+            label14.Name = "label14";
+            label14.Size = new Size(53, 29);
+            label14.TabIndex = 51;
+            label14.Text = "id :";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(26, 131, 204);
             ClientSize = new Size(1924, 1055);
+            Controls.Add(label14);
+            Controls.Add(txtExcluir);
             Controls.Add(label13);
             Controls.Add(txtQuantidade);
             Controls.Add(lblEmprestimos);
-            Controls.Add(btnVerificarEmprestimo);
             Controls.Add(btnLimpar);
             Controls.Add(btnHistorico);
             Controls.Add(btnDisponibilidade);
@@ -704,6 +715,7 @@
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Emprestimo de Livros";
+            Load += Form1_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -749,11 +761,12 @@
         private Button btnDisponibilidade;
         private Button btnHistorico;
         private Button btnLimpar;
-        private Button btnVerificarEmprestimo;
         private DateTimePicker dtInicio;
         private DateTimePicker dtFim;
         private Label lblEmprestimos;
         private TextBox txtQuantidade;
         private Label label13;
+        private TextBox txtExcluir;
+        private Label label14;
     }
 }

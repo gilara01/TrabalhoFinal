@@ -115,7 +115,7 @@ namespace TrabalhoFinal
             }
         }
 
-        public bool ExcluirAlunos()
+        public bool ExcluirClientes()
         {
             try
             {

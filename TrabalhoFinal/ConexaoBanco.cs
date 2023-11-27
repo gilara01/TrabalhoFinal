@@ -13,6 +13,7 @@ namespace TrabalhoFinal
         private const string usuario = "root";
         private const string senha = "giovanna@123";
 
+        //para criar as tabelas troca suas infos do banco acima.
         static public string bancoServidor = $"server={servidor}; user id={usuario}; database ={bancoDados}; password ={senha}";
 
     }

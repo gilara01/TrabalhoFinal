@@ -11,7 +11,7 @@ namespace TrabalhoFinal
             InitializeComponent();
         }
 
-        private void btnAluno_Click(object sender, EventArgs e)
+        private void btnCliente_Click(object sender, EventArgs e)
         {
             try
             {
@@ -58,9 +58,9 @@ namespace TrabalhoFinal
             {
                 if (!txtCPF.Text.Equals(""))
                 {
-                    CadastroCliente cadAluno = new CadastroCliente();
-                    cadAluno.Cpf = txtCPF.Text;
-                    MySqlDataReader reader = cadAluno.LocalizarCliente();
+                    CadastroCliente cadCliente = new CadastroCliente();
+                    cadCliente.Cpf = txtCPF.Text;
+                    MySqlDataReader reader = cadCliente.LocalizarCliente();
                     if (reader != null)
                     {
                         if (reader.HasRows)
@@ -119,12 +119,12 @@ namespace TrabalhoFinal
             {
                 if (!txtCPF.Text.Equals("") && !txtNome.Text.Equals("") && !txtTelefone.Text.Equals(""))
                 {
-                    CadastroCliente cadAluno = new CadastroCliente();
-                    cadAluno.Id = int.Parse(lblId.Text);
-                    cadAluno.Nome = txtNome.Text;
-                    cadAluno.Cpf = txtCPF.Text;
-                    cadAluno.Telefone = int.Parse(txtTelefone.Text);
-                    if (cadAluno.AtualizarCliente())
+                    CadastroCliente cadCliente = new CadastroCliente();
+                    cadCliente.Id = int.Parse(lblId.Text);
+                    cadCliente.Nome = txtNome.Text;
+                    cadCliente.Cpf = txtCPF.Text;
+                    cadCliente.Telefone = int.Parse(txtTelefone.Text);
+                    if (cadCliente.AtualizarCliente())
                     {
                         MessageBox.Show("Os dados do cliente foram atualizados com sucesso");
                         txtCPF.Clear();
@@ -169,9 +169,9 @@ namespace TrabalhoFinal
             {
                 if (!txtCPF.Text.Equals("") && !txtNome.Text.Equals("") && !txtTelefone.Text.Equals(""))
                 {
-                    CadastroCliente cadAluno = new CadastroCliente();
-                    cadAluno.Id = int.Parse(lblId.Text);
-                    if (cadAluno.ExcluirAlunos())
+                    CadastroCliente cadCliente = new CadastroCliente();
+                    cadCliente.Id = int.Parse(lblId.Text);
+                    if (cadCliente.ExcluirClientes())
                     {
                         MessageBox.Show("O cliente foi excluido com sucesso");
                         txtCPF.Clear();
@@ -205,15 +205,15 @@ namespace TrabalhoFinal
             }
         }
 
-        private void btnPesquisarAluno_Click(object sender, EventArgs e)
+        private void btnPesquisarCliente_Click(object sender, EventArgs e)
         {
             try
             {
                 if (!txtCpf2.Text.Equals(""))
                 {
-                    CadastroCliente cadAluno = new CadastroCliente();
-                    cadAluno.Cpf = txtCpf2.Text;
-                    MySqlDataReader reader = cadAluno.LocalizarCliente();
+                    CadastroCliente cadCliente = new CadastroCliente();
+                    cadCliente.Cpf = txtCpf2.Text;
+                    MySqlDataReader reader = cadCliente.LocalizarCliente();
                     if (reader != null)
                     {
                         if (reader.HasRows)
@@ -277,7 +277,7 @@ namespace TrabalhoFinal
             lblId2.Text = "";
         }
 
-        private void btnLivroRegistrar_Click(object sender, EventArgs e)
+        private void btnJogosRegistrar_Click(object sender, EventArgs e)
         {
             try
             {
@@ -292,6 +292,7 @@ namespace TrabalhoFinal
                         MessageBox.Show($"O Jogo {cadJogo.Nome} foi registrado com sucesso");
                         txtJogos2.Clear();
                         txtJogos2.Focus();
+                        txtQuantidade.Clear();
                     }
                     else
                     {
@@ -304,6 +305,7 @@ namespace TrabalhoFinal
                     MessageBox.Show("Por favor preencha o nome do jogo");
                     txtJogos2.Clear();
                     txtJogos2.Focus();
+                    txtQuantidade.Clear();
                 }
             }
             catch (Exception ex)
@@ -365,15 +367,15 @@ namespace TrabalhoFinal
             }
         }
 
-        private void btnLivroExcluir_Click(object sender, EventArgs e)
+        private void btnJogosExcluir_Click(object sender, EventArgs e)
         {
             try
             {
                 if (!txtJogos2.Text.Equals(""))
                 {
-                    CadastroJogo cadLivro = new CadastroJogo();
-                    cadLivro.Nome = txtJogos2.Text;
-                    if (cadLivro.ExcluirJogo())
+                    CadastroJogo cadJogo = new CadastroJogo();
+                    cadJogo.Nome = txtJogos2.Text;
+                    if (cadJogo.ExcluirJogo())
                     {
                         MessageBox.Show("O jogo foi excluido com sucesso");
                         txtJogos2.Clear();
@@ -421,10 +423,10 @@ namespace TrabalhoFinal
             {
                 if (!txtJogos.Text.Equals("") && lblCpf.Text != "")
                 {
-                    CadastroJogo cadLivros = new CadastroJogo();
+                    CadastroJogo cadJogos = new CadastroJogo();
                     CadastroEmprestimo cadEmprestimo = new CadastroEmprestimo();
-                    cadLivros.Nome = txtJogos.Text;
-                    MySqlDataReader reader = cadLivros.LocalizarJogo();
+                    cadJogos.Nome = txtJogos.Text;
+                    MySqlDataReader reader = cadJogos.LocalizarJogo();
                     if (reader != null)
                     {
                         if (reader.HasRows)
@@ -433,14 +435,14 @@ namespace TrabalhoFinal
                             if (int.Parse(reader["quantidade"].ToString()) > 0)
                             {
                                 cadEmprestimo.Jogo = txtJogos.Text;
+                                cadEmprestimo.Nome = lblNome.Text;
                                 cadEmprestimo.Cpf = lblCpf.Text;
-                                DateTime dateTime = DateTime.ParseExact(dtInicio.Value.ToShortDateString(), "yyyy,MM,dd",CultureInfo.InvariantCulture);
-                                cadEmprestimo.Inicio = dateTime.ToShortDateString();
-                                cadLivros.Quantidade -= 1;
+                                cadEmprestimo.Inicio = dtInicio.Value.ToShortDateString();
+                                cadJogos.Quantidade = int.Parse(reader["quantidade"].ToString() ) - 1;
 
                                 if (cadEmprestimo.CadastrarEmprestimos())
-                                {
-                                    cadLivros.AtualizarJogo();
+                                {   
+                                    cadJogos.AtualizarJogo();
 
                                     MessageBox.Show($"O Emprestimo foi registrado com sucesso");
                                 }
@@ -491,16 +493,26 @@ namespace TrabalhoFinal
         private void btnDevolucao_Click(object sender, EventArgs e)
         {
             try
-            {
+            {   
                 CadastroJogo cadJogo = new CadastroJogo();
+                
+               
                 CadastroEmprestimo cadEmprestimo = new CadastroEmprestimo();
-                cadEmprestimo.Jogo = txtJogos.Text;
-                cadJogo.Nome = txtJogos.Text;
+                cadEmprestimo.Id = int.Parse(txtExcluir.Text);
+                MySqlDataReader readeremprestimo = cadEmprestimo.LocalizarEmprestimo();
+                readeremprestimo.Read();
+                cadJogo.Nome = readeremprestimo["jogo"].ToString();
                 cadEmprestimo.Fim = dtFim.Value.ToShortDateString();
+                MySqlDataReader reader = cadJogo.LocalizarJogo();
                 if (cadEmprestimo.CadastrarDevolucao())
                 {
-                    cadJogo.Quantidade += 1;
-                    cadJogo.AtualizarJogo();
+                    if (reader.HasRows)
+                    {
+                        cadJogo.Quantidade = (int.Parse(reader["quantidade"].ToString())) + 1;
+                        cadJogo.AtualizarJogo();
+                    }
+
+                   
                     MessageBox.Show("Devolução feita");
                 }
                 else
@@ -522,17 +534,29 @@ namespace TrabalhoFinal
         {
             try
             {
-                if (!txtJogos.Text.Equals("") && lblCpf.Text != "")
+                if (!txtExcluir.Text.Equals("") )
                 {
                     CadastroEmprestimo cadEmprestimo = new CadastroEmprestimo();
-                    CadastroJogo cadLivros = new CadastroJogo();
-                    cadEmprestimo.Jogo = txtJogos.Text;
-                    cadLivros.Nome = txtJogos.Text;
+                    cadEmprestimo.Id = int.Parse(txtExcluir.Text);
+                    CadastroJogo cadJogos = new CadastroJogo();
+                    MySqlDataReader readeremprestimo = cadEmprestimo.LocalizarEmprestimo();
+                    readeremprestimo.Read();
+                    cadJogos.Nome = readeremprestimo["jogo"].ToString();
+
+
+                    MySqlDataReader reader = cadJogos.LocalizarJogo();
+                    reader.Read();
+                    
                     if (cadEmprestimo.ExcluirEmprestimo())
                     {
                         MessageBox.Show("O emprestimo foi excluido com sucesso");
-                        cadLivros.Quantidade += 1;
-                        cadLivros.AtualizarJogo();
+                        if (reader.HasRows)
+                        {
+                            cadJogos.Quantidade = (int.Parse(reader["quantidade"].ToString())) + 1;
+                            cadJogos.AtualizarJogo();
+                        }
+
+                        
 
                     }
                     else
@@ -544,7 +568,7 @@ namespace TrabalhoFinal
                 }
                 else
                 {
-                    MessageBox.Show("Favor pesquisar cpf do cliente e o jogo que deseja excluir o emprestimo atribuido");
+                    MessageBox.Show("Favor pesquisar o id do empréstimo que deseja excluir o emprestimo atribuido");
                     txtJogos.Clear();
 
                 }
@@ -558,35 +582,55 @@ namespace TrabalhoFinal
 
         }
 
+
         private void btnHistorico_Click(object sender, EventArgs e)
+        {
+            lblEmprestimos.Text = "";
+            MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
+            MysqlConexaoBanco.Open();
+            
+
+            string select = $"select * from emprestimos ";
+            MySqlCommand comandosql = MysqlConexaoBanco.CreateCommand();
+            comandosql.CommandText = select;
+            MySqlDataReader reader = comandosql.ExecuteReader();
+            reader.Read();
+            if (reader.HasRows)
+            {
+                lblEmprestimos.Text += reader[0].ToString() + " " + reader[1].ToString() + " " + reader[2].ToString() + " " + reader[3].ToString() + " " + reader[4].ToString() + " "+reader[5].ToString()+" "+ " \r";
+
+            }
+            while (reader.HasRows)
+            {
+                while (reader.Read()) // == this is the Read() method was called
+                {
+                    lblEmprestimos.Text += reader[0].ToString() + " " + reader[1].ToString() + " " + reader[2].ToString() + " " + reader[3].ToString() + " " + reader[4].ToString()+ " " + reader[5].ToString() +" "+ " \r";
+
+                }
+                reader.NextResult();
+            }
+
+
+            reader.Close();
+
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
         {
             MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
             MysqlConexaoBanco.Open();
-            string count = "select count(id) from emprestimos ";
-            string select = "select * from emprestimos ";
-            MySqlCommand comandosql2 = MysqlConexaoBanco.CreateCommand();
-            comandosql2.CommandText = count;
-            MySqlDataReader countreader = comandosql2.ExecuteReader();
-            countreader.Read();
-            int Counter = int.Parse(countreader[0].ToString());
-            countreader.Close();
-            MessageBox.Show(Counter.ToString());
-
-            MySqlCommand comandosql = MysqlConexaoBanco.CreateCommand();
-            comandosql.CommandText = select;
-            ;
-            MessageBox.Show("");
-            //MessageBox.Show(reader.GetValues(1).ToString);
-            for (int i = 1; i < Counter+2; i++)
-            {
-                MySqlDataReader reader = comandosql.ExecuteReader();
-                reader.Read();
-                //lblEmprestimos.Text += reader[i].ToString() + " ";
-
-
-            }
+            string createtables = "CREATE TABLE IF NOT EXISTS jogos (\r\n  id int NOT NULL AUTO_INCREMENT,\r\n " +
+                " nome varchar(45) NOT NULL,\r\n  quantidade int NOT NULL,\r\n  PRIMARY KEY (id)\r\n) " +
+                "ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\r\nCREATE TABLE IF NOT EXISTS emprestimos" +
+                " (\r\n  id int NOT NULL AUTO_INCREMENT,\r\n  nome varchar(45) NOT NULL,\r\n  cpf varchar(45) NOT NULL,\r\n " +
+                " jogo varchar(45) NOT NULL,\r\n  inicio varchar(45) NOT NULL,\r\n  fim varchar(45) DEFAULT NULL,\r\n " +
+                " PRIMARY KEY (id),\r\n  UNIQUE KEY id_UNIQUE (id)\r\n) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;\r\n" +
+                "CREATE TABLE IF NOT EXISTS cliente (\r\n  id int NOT NULL AUTO_INCREMENT,\r\n  nome varchar(45) NOT NULL,\r\n  cpf varchar(45) NOT NULL,\r\n  telefone int NOT NULL,\r\n  " +
+                "PRIMARY KEY (id),\r\n  UNIQUE KEY cpf_UNIQUE (cpf)\r\n) ENGINE=InnoDB  DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;";
+            MySqlCommand comandosql0 = MysqlConexaoBanco.CreateCommand();
+            comandosql0.CommandText = createtables;
+            comandosql0.ExecuteReader();
         }
-
-        
     }
 }

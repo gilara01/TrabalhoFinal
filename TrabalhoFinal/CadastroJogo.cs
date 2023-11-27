@@ -92,6 +92,7 @@ namespace TrabalhoFinal
                 MySqlCommand comandosql = MysqlConexaoBanco.CreateCommand();
                 comandosql.CommandText = select;
                 MySqlDataReader reader = comandosql.ExecuteReader();
+                reader.Read();
                 return reader;
 
             }
@@ -131,7 +132,7 @@ namespace TrabalhoFinal
                 MySqlConnection MysqlConexaoBanco = new MySqlConnection(ConexaoBanco.bancoServidor);
                 MysqlConexaoBanco.Open();
 
-                string update = $"update livros set quantidade = '{quantidade}' where nome = '{nome}';";
+                string update = $"update jogos set quantidade = '{quantidade}' where nome = '{nome}';";
                 MySqlCommand comandosql = MysqlConexaoBanco.CreateCommand();
                 comandosql.CommandText = update;
                 comandosql.ExecuteNonQuery();
